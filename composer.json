@@ -1,0 +1,33 @@
+{
+    "name": "bishwopl/laminas-file-upload",
+    "description": "Custom file upload element for laminas MVC framework, supports filesystem and database storage(using DoctrineORM)",
+    "type": "library",
+    "homepage": "https://github.com/bishwopl/laminas-file-upload",
+    "keywords": [
+        "form",
+        "custom element"
+    ],
+    "authors": [
+        {
+            "name": "Bishwo Prasad Lamichhane",
+            "email": "bishwo.prasad@gmail.com"
+        }
+    ],"require": {
+        "php": "^7",
+        "laminas/laminas-cache": "^2",
+        "laminas/laminas-mvc-form": "^1",
+        "laminas/laminas-mvc-plugins": "^1",
+        "laminas/laminas-session": "^2",
+        "laminas/laminas-servicemanager": "^3.3",
+        "laminas/laminas-file": "^2",
+        "doctrine/doctrine-orm-module": "^2.1 || ^3.0",
+        "ramsey/uuid": "^3",
+        "ramsey/uuid-doctrine": "^1",
+        "masterexploder/phpthumb": "^2"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaminasFileUpload\\": "src"
+        }
+    }
+}

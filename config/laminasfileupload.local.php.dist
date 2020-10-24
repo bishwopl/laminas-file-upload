@@ -1,0 +1,8 @@
+<?php
+
+return [
+    "laminas_file_uploadmodule_options"=>[
+        "objectmanager" => "",     // service key of the object manager
+        "entity" => "",            // FQCN of database entity to use
+    ]
+];

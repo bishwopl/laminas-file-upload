@@ -1,0 +1,110 @@
+<?php
+    $formatter = new \LaminasFileUpload\SizeFormatter\SizeFormatter();
+    
+    if($this->errors!==NULL){
+        echo 'Upload Unsuccessful. Reason(s)<ol>';
+        foreach($this->errors as $key=>$e){
+            foreach($e as $message){
+                echo '<li>'.$message.'</li>';
+            }
+        }
+        echo '</ol>';
+        echo''
+        . '<script type="text/javascript">'
+            . '$(document).ready(function(){'
+                . '$("#'.$this->buttonId.'").html(\''
+                . '<span class="'.$this->buttonErrorIcon.'"></span> '
+                . $this->buttonErrorText
+                . '\');'
+            . '});'
+        . '</script>'
+        . '';
+    }
+    else{
+        $imgs = '';
+        $names = [];
+        $download = '';
+        if($this->isImage==true&&$this->showPreview==true){
+            $previewWidth  = $this->previewDim['width'];
+            $previewHeight = $this->previewDim['height'];
+            foreach($this->files as $f){
+                $content = $f->getContent();
+                if(!is_string($content)){
+                    $content = stream_get_contents($content);
+                }
+                $imgs .= '<img src=\'data:image/png;base64,'.base64_encode($content).'\' '
+                        . ' height=\"'.$previewHeight.'\" width=\"'.$previewWidth.'\"/>';
+            }
+            
+        }
+        
+        foreach($this->files as $f){
+            $names[] = is_file($f->getName())?$f->getName():$f->getId();
+        }
+        
+        echo''
+            . '<script type="text/javascript">'
+                . '$(document).ready(function(){'
+                    . '$("#'.$this->previewDiv.'").html("'.$imgs.'");'
+                . '});'
+            . '</script>'
+            . '';
+        
+        echo''
+        . '<script type="text/javascript">'
+            . '$(document).ready(function(){'
+                . '$("#'.$this->inputId.'").val(\''.implode(',', $names).'\')'
+            . '});'
+        . '</script>'
+        . '';
+        echo''
+            . '<script type="text/javascript">'
+                . '$(document).ready(function(){'
+                    . '$("#'.$this->buttonId.'").html(\''
+                    . '<span class="'.$this->buttonSuccessIcon.'"></span> '
+                    . $this->buttonSuccessText
+                    . '\');'
+                . '});'
+            . '</script>'
+            . '';
+        if(sizeof($this->files)>0){
+            $download = '<table style=\"text-align:center;\" id=\"upload-display-table\"'
+                . 'class=\"table table-hover table-responsive table-stripped table-sm\">';  
+        }
+        foreach($this->files as $f){
+            $downloadLink = '<a title=\"Get Attachment\" href=\"'
+                . $this->url('fileUpload/getUpload' , array('uploadname' => $this->uploadName,'filename'=>$f->getid())).'\" '
+                . 'target=\"_blank\">'
+                . '<span class=\"fas fa-download fa-xs\"></span></a>';
+            
+            $removeLink = '<span style=\"color: #bb0000; cursor: pointer;\" title=\"Remove Attachment\" '
+                . 'class=\"fas fa-trash fa-xs\" '
+                . 'onclick=\"removeUpload(\''.$this->uploadName.'\',\''.$f->getId().'\',\''.$this->downloadDiv.'\')\">'
+                . '</span>';
+            $download .= '<tr>';
+                $download .= '<td><span style=\"color: #00bb00; cursor: pointer;\" '
+                    . 'title=\"Upload Successful\" '
+                    . 'class=\"fas fa-check-circle fa-xs\"'
+                    . '</span></td>';
+                $download .= '<td><small>'. $formatter->resizeName(basename($f->getName())).'</small></td>';
+                $download .= '<td><small>'.$formatter->sizeFormat($f->getSize()).'</small></td>';
+                $download .= '<td>'.$downloadLink.'</td>';
+                if($this->enableRemove){
+                    $download .= '<td>'.$removeLink.'</td>';
+                }
+            $download .= '</tr>';
+        }
+        if(sizeof($this->files)>0){ 
+            $download .= '</table>'; 
+        }
+        
+        echo''
+        . '<script type="text/javascript">'
+            . '$(document).ready(function(){'
+                . '$("#'.$this->downloadDiv.'").html("'.$download.'");'
+            . '});'
+        . '</script>'
+        . '';
+
+    }
+    
