@@ -7,7 +7,7 @@
 
 namespace LaminasFileUpload\Storage;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use LaminasFileUpload\Entity\FileEntityInterface;
 use LaminasFileUpload\Storage\StorageInterface;
 use Laminas\Session\Container;
