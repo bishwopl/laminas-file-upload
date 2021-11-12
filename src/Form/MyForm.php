@@ -22,7 +22,7 @@ class MyForm extends Form
             'attributes' => [
                 'formUniqueId'      => 'photo_',
                 'id'                => 'photoPathId',
-                'storage'           => 'db', // 'filesystem' or 'db'
+                'storage'           => 'filesystem', // 'filesystem' or 'db'
                 'showProgress'      => true,
                 'multiple'          => true,
                 'enableRemove'      => true,
@@ -37,7 +37,7 @@ class MyForm extends Form
                 'uploadingText'     => 'Uploading Photo...',
                 'replacePrevious'   => false,
                 'randomizeName'     => true,
-                'showPreview'       => false,
+                'showPreview'       => true,
                 'validator' => [ 
                     'allowedExtentions' => 'jpg,png',
                     'allowedMime'       => 'image/jpeg,image/png',
