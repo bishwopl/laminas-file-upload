@@ -9,6 +9,8 @@ namespace LaminasFileUpload\Storage;
 
 use LaminasFileUpload\Entity\FileEntityInterface;
 use Laminas\Session\Container;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 class FileSystemStorageAdapter implements StorageInterface{
     
@@ -41,7 +43,7 @@ class FileSystemStorageAdapter implements StorageInterface{
 
         rename($filePath, $newname);
         
-        $fileObj = $this->createFileObjectFromPath($newname);
+        $fileObj = $this->createFileObjectFromPath($newname, $uuid);
         
         return $fileObj;
     }
@@ -63,10 +65,10 @@ class FileSystemStorageAdapter implements StorageInterface{
         return $fileObject;
     }
     
-    public function createFileObjectFromPath($path) {
+    public function createFileObjectFromPath($path, UuidInterface $uuid = NULL) {
         $fileObj = NULL;
         if (is_file($path)) {
-            $uuid = \Ramsey\Uuid\Uuid::uuid4();
+            $uuid = $uuid!==NULL?$uuid:Uuid::fromString(Uuid::uuid4());
             $fileObj = clone $this->fileObject;
             $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
             $mime = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $path);
@@ -74,7 +76,7 @@ class FileSystemStorageAdapter implements StorageInterface{
 
             $fileObj->setId($uuid);
             $fileObj->setContent($content);
-            $fileObj->setExtention($ext);
+            $fileObj->setExtension($ext);
             $fileObj->setMime($mime);
             $fileObj->setName($path);
             $fileObj->setSize(filesize($path));

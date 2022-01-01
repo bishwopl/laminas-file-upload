@@ -55,6 +55,8 @@ return [
             \LaminasFileUpload\Storage\Factory\FileSystemStorageAdapterFactory::class,
             \LaminasFileUpload\Storage\DoctrineStorageAdapter::class =>
             \LaminasFileUpload\Storage\Factory\DoctrineStorageAdapterFactory::class,
+            \LaminasFileUpload\Storage\HybridStorageAdapter::class =>
+            \LaminasFileUpload\Storage\Factory\DoctrineStorageAdapterFactory::class,
         ],
     ],
     'form_elements' => [

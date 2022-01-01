@@ -65,9 +65,9 @@ class FileUploadService {
         $minSize = $validators['minSize'] == '' ? false : $validators['minSize'];
         $maxSize = $validators['maxSize'] == '' ? false : $validators['maxSize'];
         $allowedMime = $validators['allowedMime'] == '' ? false : $validators['allowedMime'];
-        $allowedExtentions = $validators['allowedExtentions'] == '' ? false : $validators['allowedExtentions'];
-        if (!array($allowedExtentions)) {
-            $allowedExtentions = explode(',', $allowedExtentions);
+        $allowedExtensions = $validators['allowedExtensions'] == '' ? false : $validators['allowedExtensions'];
+        if (!array($allowedExtensions)) {
+            $allowedExtensions = explode(',', $allowedExtensions);
         }
         if ($minSize !== false) {
             $fileInput->getValidatorChain()->attachByName('filesize', array('min' => $minSize));
@@ -81,8 +81,8 @@ class FileUploadService {
             $fileInput->getValidatorChain()->attachByName('filemimetype', array('mimeType' => $allowedMime));
         }
 
-        if ($allowedExtentions !== false) {
-            $extensionvalidator = new \Laminas\Validator\File\Extension(array('extension' => $allowedExtentions));
+        if ($allowedExtensions !== false) {
+            $extensionvalidator = new \Laminas\Validator\File\Extension(array('extension' => $allowedExtensions));
             $fileInput->getValidatorChain()->attach($extensionvalidator);
         }
 

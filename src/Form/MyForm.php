@@ -22,7 +22,7 @@ class MyForm extends Form
             'attributes' => [
                 'formUniqueId'      => 'photo_',
                 'id'                => 'photoPathId',
-                'storage'           => 'filesystem', // 'filesystem' or 'db'
+                'storage'           => 'hybrid', // 'filesystem' or 'db' or 'hybrid'
                 'showProgress'      => true,
                 'multiple'          => true,
                 'enableRemove'      => true,
@@ -39,7 +39,7 @@ class MyForm extends Form
                 'randomizeName'     => true,
                 'showPreview'       => true,
                 'validator' => [ 
-                    'allowedExtentions' => 'jpg,png',
+                    'allowedExtensions' => 'jpg,png',
                     'allowedMime'       => 'image/jpeg,image/png',
                     'minSize'           => 10,
                     'maxSize'           => 50000*1024,

@@ -7,6 +7,8 @@
 
 namespace LaminasFileUpload\Storage;
 
+use Ramsey\Uuid\UuidInterface;
+
 interface StorageInterface {
 
     /**
@@ -31,6 +33,6 @@ interface StorageInterface {
     
     public function fetchAllFromUploadName($uploadName);
 
-    public function createFileObjectFromPath($path);
+    public function createFileObjectFromPath($path, UuidInterface $uuid = NULL);
 
 }

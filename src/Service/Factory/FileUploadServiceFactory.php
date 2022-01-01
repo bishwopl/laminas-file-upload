@@ -14,6 +14,7 @@ class FileUploadServiceFactory implements FactoryInterface
         $adapters       = [
             'filesystem' => $container->get(\LaminasFileUpload\Storage\FileSystemStorageAdapter::class),
             'db'         => $container->get(\LaminasFileUpload\Storage\DoctrineStorageAdapter::class),
+            'hybrid'     => $container->get(\LaminasFileUpload\Storage\HybridStorageAdapter::class),
         ];
         return new FileUploadService($adapters, $container, $moduleOptions);
     }

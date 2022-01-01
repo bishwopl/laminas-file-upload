@@ -7,7 +7,7 @@ use Laminas\Form\ElementInterface;
   
 class FormElement extends BaseFormElement
 {
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         $renderer = $this->getView();
         if (!method_exists($renderer, 'plugin')) {

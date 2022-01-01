@@ -12,6 +12,7 @@ use LaminasFileUpload\Entity\FileEntityInterface;
 use LaminasFileUpload\Storage\StorageInterface;
 use Laminas\Session\Container;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 class DoctrineStorageAdapter implements StorageInterface {
 
@@ -62,7 +63,7 @@ class DoctrineStorageAdapter implements StorageInterface {
         
         rename($file, $newname);
         
-        $fileObj = $this->createFileObjectFromPath($newname);
+        $fileObj = $this->createFileObjectFromPath($newname, $uuid);
         if($fileObj instanceof \LaminasFileUpload\Entity\FileEntityInterface){
             if($attributes['multiple']==FALSE && isset($attributes['newId']) && ($attributes['newId'] instanceof \Ramsey\Uuid\UuidInterface)){
                 $fileObj->setId($attributes['newId']);
@@ -79,7 +80,7 @@ class DoctrineStorageAdapter implements StorageInterface {
         return $obj;
     }
 
-    public function createFileObjectFromPath($path) {
+    public function createFileObjectFromPath($path, UuidInterface $uuid = NULL) {
         $fileObj = NULL;
         if (is_file($path)) {
             $fileObj = clone $this->fileObject;
@@ -88,11 +89,11 @@ class DoctrineStorageAdapter implements StorageInterface {
             $content = file_get_contents($path);
 
             $fileObj->setContent($content);
-            $fileObj->setExtention($ext);
+            $fileObj->setExtension($ext);
             $fileObj->setMime($mime);
             $fileObj->setName($path);
             $fileObj->setSize(filesize($path));
-            $fileObj->setId(Uuid::fromString(Uuid::uuid4()));
+            $fileObj->setId($uuid!==NULL?$uuid:Uuid::fromString(Uuid::uuid4()));
             unlink($path);
         }
         return $fileObj;

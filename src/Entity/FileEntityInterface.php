@@ -29,20 +29,20 @@ interface FileEntityInterface {
     public function getName();
 
     /**
-     * Set extention
+     * Set extension
      *
-     * @param string $extention
+     * @param string $extension
      *
      * @return File
      */
-    public function setExtention($extention);
+    public function setExtension($extension);
 
     /**
-     * Get extention
+     * Get extension
      *
      * @return string
      */
-    public function getExtention();
+    public function getExtension();
 
     /**
      * Set mime

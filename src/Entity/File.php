@@ -35,9 +35,9 @@ class File implements FileEntityInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="extention", type="string", length=10, nullable=false)
+     * @ORM\Column(name="extension", type="string", length=10, nullable=false)
      */
-    private $extention;
+    private $extension;
 
     /**
      * @var string
@@ -100,27 +100,27 @@ class File implements FileEntityInterface
     }
 
     /**
-     * Set extention
+     * Set extension
      *
-     * @param string $extention
+     * @param string $extension
      *
      * @return File
      */
-    public function setExtention($extention)
+    public function setExtension($extension)
     {
-        $this->extention = $extention;
+        $this->extension = $extension;
 
         return $this;
     }
 
     /**
-     * Get extention
+     * Get extension
      *
      * @return string
      */
-    public function getExtention()
+    public function getExtension()
     {
-        return $this->extention;
+        return $this->extension;
     }
 
     /**

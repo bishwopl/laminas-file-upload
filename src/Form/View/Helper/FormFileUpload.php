@@ -12,7 +12,6 @@ class FormFileUpload extends AbstractHelper {
     protected $basepath;
     
     /**
-     *
      * @var \LaminasFileUpload\Service\FileUploadService
      */
     protected $uploadService;
@@ -63,7 +62,7 @@ class FormFileUpload extends AbstractHelper {
         $validators = $attr['validator'];
         $helpText = 'Min Size : '.  $this->sizeFormat($validators['minSize']).', '
                 . 'Max Size : '.$this->sizeFormat($validators['maxSize']).', '
-                . 'Allowed Types : '.$validators['allowedExtentions'];
+                . 'Allowed Types : '.$validators['allowedExtensions'];
 
         return '<div class="row">'
                 . '<div class="col-xs-6">'
@@ -83,7 +82,7 @@ class FormFileUpload extends AbstractHelper {
                 . '$(document).ready(function(){'
                     . 'var minSize = '.$validators['minSize'].';'
                     . 'var maxSize = '.$validators['maxSize'].';'
-                    . 'var allowedExtentions = '.json_encode(explode(',', $validators['allowedExtentions'])).';'
+                    . 'var allowedExtensions = '.json_encode(explode(',', $validators['allowedExtensions'])).';'
                     . '$(\'#'.$buttonId.'\').click(function(){'
                         . 'if ($(\'#'.$addedFormDivId.'\').length == 0) {'
                             . '$("body").append(\''
@@ -109,18 +108,18 @@ class FormFileUpload extends AbstractHelper {
                                 . 'for(var i=0; i<selected_files.length; i++){'
                                     . 'var fileName = selected_files[i].name;'
                                     . 'var fileSize = selected_files[i].size;'
-                                    . 'var fileExtention = fileName.split(".").pop().toLowerCase();'
+                                    . 'var fileExtension = fileName.split(".").pop().toLowerCase();'
                                     . 'if((fileSize<minSize) || (fileSize>maxSize)){'
                                         . 'isValid = false;'
                                         . 'msg += "Size of "+fileName+" is "+humanFileSize(fileSize)+" but must be within "+humanFileSize(minSize)+" to " +humanFileSize(maxSize)+"\n";'
                                     . '}'
-                                    . 'if($.inArray(fileExtention, allowedExtentions)===-1){'
+                                    . 'if($.inArray(fileExtension, allowedExtensions)===-1){'
                                         . 'isValid = false;'
-                                        . 'msg += "File type of "+fileName+" is "+fileExtention+" but must be "+"'. str_replace(',', ' or ', $validators['allowedExtentions']). '"+"\n";'
+                                        . 'msg += "File type of "+fileName+" is "+fileExtension+" but must be "+"'. str_replace(',', ' or ', $validators['allowedExtensions']). '"+"\n";'
                                     . '}'
                                 . '}'
                                 . 'if(!isValid){'
-                                    . 'alert("Error(s) occoured: \n\n"+msg+"\n Please try again!");'
+                                    . 'alert("Error(s) occoured: \n\n"+msg+"\nPlease try again!");'
                                 . '}'
                                 . 'return isValid;'
                             . '},'
@@ -246,7 +245,7 @@ class FormFileUpload extends AbstractHelper {
             $imgs = '';
             foreach($fileObjects as $f){
                 $content = $f->getContent();
-                if(!is_string($content)){
+                if(is_resource($content)){
                     $content = stream_get_contents($content);
                 }
                 $imgs .= '<img src=\'data:image/png;base64,'.base64_encode($content).'\' '

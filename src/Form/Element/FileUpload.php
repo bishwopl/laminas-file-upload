@@ -43,7 +43,6 @@ class FileUpload extends Element implements InputProviderInterface
     /**
      * Provide default input rules for this element
      *
-     * Attaches a phone number validator.
      *
      * @return array
      */
